@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Callback Function</title>
+</head>
+<body>
+    <h1>Callback Function</h1>
+   <container>
+        <ul></ul>
+</container>
+   
+</body>
+<script >const posts = [
+    {title: "post one", body: "this is a post one", createdAt: new Date().getTime()},
+    {title: "post two", body: "this is a post two",createdAt: new Date().getTime()},
+    {title: "post three", body: "this is a post three", createdAt: new Date().getTime()}
+];
+let IntervalId=0;
+function getpost(){
+    clearInterval(IntervalId)
+    IntervalId = setInterval(()=>{
+        setTimeout(() => {
+            let output = "";
+            posts.forEach((post, index)=> {
+                output += `<li>${post.title}- last updated ${(new Date().getTime() - post.createdAt)/1000 } - second ago</li>`
+            });
+            document.body.innerHTML = output;
+        }, 1000);
+    }, 5000)
+ 
+}
+// getpost();
+function createpost(post, callback){
+    setTimeout(() => {
+        posts.push({...post, createdAt: new Date().getTime()});
+        callback();
+    }, 2000);
+};
+createpost({title: "post four", body: "this is a fourth post"}, getpost);
+createpost({title: "post fifth", body: "this is a fifth post"}, getpost);</script>
+</html>
